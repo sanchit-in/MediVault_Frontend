@@ -1,0 +1,3475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MediVault is a patient-owned AI medical intelligence platform that organizes records, surfaces insights, and enables secure consent-based sharing.">
+  <title>MediVault | Patient-Owned AI Medical Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Root variables, spacing system, color tokens, and global theme definitions */
+    :root {
+      --primary: #1A6BF5;
+      --primary-dark: #0E4FCC;
+      --primary-light: #EBF2FF;
+      --secondary: #0ABFB8;
+      --accent: #7C3AED;
+      --neutral-50: #F8FAFC;
+      --neutral-100: #F1F5F9;
+      --neutral-200: #E2E8F0;
+      --neutral-300: #CBD5E1;
+      --neutral-400: #94A3B8;
+      --neutral-500: #64748B;
+      --neutral-600: #475569;
+      --neutral-800: #1E293B;
+      --neutral-900: #0F172A;
+      --white: #FFFFFF;
+      --danger: #EF4444;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 24px 56px rgba(15, 23, 42, 0.14);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 24px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+      --space-32: 128px;
+      --container-width: 1200px;
+      --nav-height: 84px;
+      --transition-base: 220ms ease;
+      --transition-slow: 320ms ease;
+      --section-padding: clamp(84px, 10vw, 132px);
+      --hero-title: clamp(3.1rem, 5vw, 4.5rem);
+      --section-title: clamp(2.1rem, 3vw, 3rem);
+    }
+
+    /* Base reset, layout primitives, and shared typography rules */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(26, 107, 245, 0.08), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #ffffff 22%, #f7fafd 100%);
+      color: var(--neutral-800);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.body--locked {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: none;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page-shell {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--container-width));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: var(--section-padding) 0;
+      position: relative;
+    }
+
+    .section__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 7px 14px;
+      margin-bottom: var(--space-4);
+      border-radius: var(--radius-pill);
+      background: rgba(26, 107, 245, 0.06);
+      color: #174ea6;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .section__header {
+      max-width: 720px;
+      margin-bottom: 56px;
+    }
+
+    .section__title {
+      margin: 0 0 14px;
+      color: var(--neutral-900);
+      font-size: var(--section-title);
+      line-height: 1.14;
+      letter-spacing: -0.035em;
+      font-weight: 700;
+    }
+
+    .section__subtitle {
+      margin: 0;
+      color: var(--neutral-500);
+      font-size: 1.06rem;
+      max-width: 640px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* Reusable button styles, pills, links, and compact badges */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), color var(--transition-base), border-color var(--transition-base), opacity var(--transition-base);
+      font-weight: 600;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .button:focus-visible,
+    .input:focus-visible,
+    .select:focus-visible,
+    .otp__input:focus-visible,
+    .segmented__option:focus-visible,
+    .nav__link:focus-visible,
+    .mobile-nav__link:focus-visible {
+      outline: 3px solid rgba(26, 107, 245, 0.2);
+      outline-offset: 2px;
+    }
+
+    .button--primary {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 1px 2px rgba(26, 107, 245, 0.24), 0 8px 18px rgba(26, 107, 245, 0.18);
+    }
+
+    .button--primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 1px 2px rgba(14, 79, 204, 0.24), 0 12px 24px rgba(14, 79, 204, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .button--ghost {
+      border-color: rgba(148, 163, 184, 0.32);
+      color: var(--neutral-800);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .button--ghost:hover {
+      border-color: rgba(26, 107, 245, 0.28);
+      color: var(--primary);
+      background: #f8fbff;
+      transform: translateY(-1px);
+    }
+
+    .button--light {
+      border-color: rgba(255, 255, 255, 0.35);
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .button--light:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-pill);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* Navbar, sticky shell, mobile panel, and section-aware active indicators */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 12px 0;
+      transition: padding var(--transition-base);
+    }
+
+    .nav-wrap.nav-wrap--scrolled {
+      padding: var(--space-2) 0;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      min-height: 72px;
+      padding: 0 18px;
+      border: 1px solid rgba(226, 232, 240, 0.82);
+      border-bottom-color: transparent;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+      transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .nav-wrap.nav-wrap--scrolled .nav {
+      border-bottom-color: rgba(226, 232, 240, 0.95);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+    }
+
+    .nav__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 650;
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+      color: var(--neutral-900);
+    }
+
+    .nav__brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(26, 107, 245, 0.12), rgba(10, 191, 184, 0.1));
+      border: 1px solid rgba(26, 107, 245, 0.08);
+      padding: var(--space-2);
+    }
+
+    .nav__links,
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .nav__links {
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav__link,
+    .mobile-nav__link {
+      position: relative;
+      padding: var(--space-2) 2px;
+      color: var(--neutral-500);
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color var(--transition-base);
+    }
+
+    .nav__link::after,
+    .mobile-nav__link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--primary);
+      transform: translateX(-50%) scaleX(0);
+      transition: transform var(--transition-base);
+    }
+
+    .nav__link:hover,
+    .nav__link.nav__link--active,
+    .mobile-nav__link:hover,
+    .mobile-nav__link.mobile-nav__link--active {
+      color: var(--neutral-900);
+    }
+
+    .nav__link.nav__link--active::after,
+    .mobile-nav__link.mobile-nav__link--active::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    .nav__toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(26, 107, 245, 0.08);
+      color: var(--neutral-900);
+    }
+
+    .mobile-nav {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 16px;
+      right: 16px;
+      padding: var(--space-6);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      gap: var(--space-4);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-12px);
+      transition: opacity var(--transition-base), transform var(--transition-base);
+    }
+
+    .mobile-nav.mobile-nav--open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-nav__actions {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+
+    /* Hero section, animated blobs, primary copy, and product mockup */
+    .hero {
+      min-height: calc(100vh - 40px);
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      padding-top: 36px;
+    }
+
+    .hero__background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero__blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      opacity: 0.11;
+      animation: floatBlob 8s ease-in-out infinite;
+    }
+
+    .hero__blob--one {
+      width: min(42vw, 540px);
+      height: min(42vw, 540px);
+      top: 8%;
+      left: -8%;
+      background: var(--primary-light);
+    }
+
+    .hero__blob--two {
+      width: min(36vw, 460px);
+      height: min(36vw, 460px);
+      top: 14%;
+      right: 6%;
+      background: rgba(10, 191, 184, 0.24);
+      animation-delay: -2s;
+    }
+
+    .hero__blob--three {
+      width: min(28vw, 360px);
+      height: min(28vw, 360px);
+      bottom: 4%;
+      left: 38%;
+      background: rgba(124, 58, 237, 0.1);
+      animation-delay: -4s;
+    }
+
+    .hero__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+      gap: 72px;
+      align-items: center;
+    }
+
+    .hero__trust-badge {
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--neutral-700);
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero__headline {
+      margin: 0 0 18px;
+      font-size: var(--hero-title);
+      line-height: 1.04;
+      color: var(--neutral-900);
+      letter-spacing: -0.05em;
+      max-width: 10.5ch;
+    }
+
+    .hero__headline-accent {
+      color: var(--primary);
+    }
+
+    .hero__subheadline {
+      max-width: 620px;
+      margin: 0 0 30px;
+      color: var(--neutral-500);
+      font-size: 1.18rem;
+      line-height: 1.75;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-bottom: 28px;
+    }
+
+    .hero__proof {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      padding: 10px 14px;
+      border: 1px solid rgba(226, 232, 240, 0.88);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--neutral-500);
+      font-weight: 500;
+    }
+
+    .hero__proof strong {
+      color: var(--neutral-900);
+    }
+
+    .hero__mockup-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      animation: floatPhone 4s ease-in-out infinite;
+    }
+
+    .hero__phone {
+      position: relative;
+      width: min(100%, 440px);
+      padding: 16px 12px;
+      border: 1px solid rgba(203, 213, 225, 0.9);
+      border-radius: 40px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.12);
+    }
+
+    .hero__phone-notch {
+      width: 120px;
+      height: 22px;
+      margin: 0 auto var(--space-4);
+      border-radius: 999px;
+      background: var(--neutral-900);
+      opacity: 0.85;
+    }
+
+    .timeline {
+      overflow: hidden;
+      border-radius: 30px;
+      background: var(--white);
+      min-height: 620px;
+      padding: 22px;
+      box-shadow: inset 0 0 0 1px rgba(226, 232, 240, 0.95);
+    }
+
+    .timeline__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+
+    .timeline__title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+    }
+
+    .timeline__summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .timeline__summary-card,
+    .timeline__record {
+      padding: var(--space-4);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+    }
+
+    .timeline__summary-card strong {
+      display: block;
+      color: var(--neutral-900);
+      font-size: 1.25rem;
+      margin-bottom: 2px;
+    }
+
+    .timeline__summary-card span {
+      color: var(--neutral-500);
+      font-size: 0.875rem;
+    }
+
+    .timeline__records {
+      display: grid;
+      gap: var(--space-4);
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: var(--space-2);
+    }
+
+    .timeline__record-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    .timeline__record-title {
+      margin: 0;
+      color: var(--neutral-900);
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .timeline__record-meta {
+      color: var(--neutral-500);
+      font-size: 0.875rem;
+    }
+
+    .timeline__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .timeline__badge--lab {
+      color: #1d4ed8;
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .timeline__badge--rx {
+      color: #0f766e;
+      background: rgba(13, 148, 136, 0.12);
+    }
+
+    .timeline__badge--discharge {
+      color: #7c2d12;
+      background: rgba(249, 115, 22, 0.12);
+    }
+
+    .timeline__status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.14);
+    }
+
+    .timeline__record-copy {
+      margin: 0;
+      font-size: 0.925rem;
+      color: var(--neutral-600);
+    }
+
+    .hero__query {
+      position: absolute;
+      right: -12px;
+      bottom: 56px;
+      width: min(300px, 72vw);
+      padding: 16px 18px;
+      border-radius: 22px 22px 10px 22px;
+      background: linear-gradient(135deg, #1a73e8, #5b8def);
+      color: var(--white);
+      box-shadow: 0 20px 40px rgba(26, 115, 232, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .hero__query-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero__query-text {
+      min-height: 54px;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .hero__query-cursor,
+    .ai-chat__cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1em;
+      margin-left: 2px;
+      background: currentColor;
+      animation: blink 1s steps(2, start) infinite;
+      vertical-align: text-bottom;
+    }
+
+    /* Stats bar layout, dark theme treatment, and animated number presentation */
+    .stats {
+      background: linear-gradient(180deg, #0f172a 0%, #122033 100%);
+      color: var(--white);
+      padding: 28px 0;
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stats__item {
+      text-align: center;
+      padding: 20px 16px;
+      border-right: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .stats__item:last-child {
+      border-right: 0;
+    }
+
+    .stats__number {
+      display: block;
+      margin-bottom: var(--space-2);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .stats__label {
+      color: rgba(203, 213, 225, 0.72);
+      font-size: 0.92rem;
+    }
+
+    /* Feature cards, icon circles, hover motion, and entrance reveal states */
+    .features__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      height: 100%;
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--white);
+      box-shadow: none;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card:hover .feature-card__icon {
+      transform: scale(1.1);
+    }
+
+    .feature-card__icon {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      color: var(--primary);
+      background: linear-gradient(180deg, rgba(26, 107, 245, 0.1), rgba(26, 107, 245, 0.05));
+      border: 1px solid rgba(26, 107, 245, 0.08);
+      transition: transform var(--transition-base);
+    }
+
+    .feature-card__title {
+      margin: 0 0 10px;
+      color: var(--neutral-900);
+      font-size: 1.22rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card__text {
+      margin: 0;
+      color: var(--neutral-500);
+    }
+
+    /* How it works stepper, connectors, active states, and pipeline diagram */
+    .how {
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0.92), rgba(255, 255, 255, 0.9));
+    }
+
+    .how__stepper {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-5);
+      margin-bottom: var(--space-12);
+    }
+
+    .how__stepper::before {
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: 12%;
+      right: 12%;
+      border-top: 2px dashed rgba(148, 163, 184, 0.45);
+      z-index: 0;
+    }
+
+    .how__step {
+      position: relative;
+      z-index: 1;
+      padding: var(--space-6);
+      border-radius: 22px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      background: rgba(255, 255, 255, 0.94);
+      text-align: left;
+      transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base), background var(--transition-base);
+    }
+
+    .how__step:hover,
+    .how__step.how__step--active {
+      transform: translateY(-2px);
+      border-color: rgba(26, 107, 245, 0.3);
+      background: rgba(248, 251, 255, 0.98);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .how__step-index {
+      width: 60px;
+      height: 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid rgba(26, 107, 245, 0.18);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    .how__step.how__step--active .how__step-index {
+      border-color: var(--primary);
+      background: rgba(26, 107, 245, 0.08);
+    }
+
+    .how__step-title {
+      margin: 0 0 var(--space-2);
+      color: var(--neutral-900);
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+    .how__step-copy {
+      margin: 0;
+      color: var(--neutral-600);
+      font-size: 0.95rem;
+    }
+
+    .pipeline {
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--white);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pipeline__flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .pipeline__node {
+      display: grid;
+      justify-items: center;
+      gap: var(--space-3);
+      text-align: center;
+      color: var(--neutral-700);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .pipeline__chip {
+      min-width: 100%;
+      padding: var(--space-4);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(26, 107, 245, 0.06), rgba(26, 107, 245, 0.02));
+      color: var(--neutral-900);
+      box-shadow: inset 0 0 0 1px rgba(26, 107, 245, 0.08);
+    }
+
+    .pipeline__arrow {
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(26, 107, 245, 0.2), rgba(26, 107, 245, 0.9));
+      position: relative;
+      align-self: center;
+      transform: translateY(-18px);
+    }
+
+    .pipeline__arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid rgba(26, 107, 245, 0.9);
+      border-right: 2px solid rgba(26, 107, 245, 0.9);
+      transform: rotate(45deg);
+    }
+
+    /* Security section, dark illustration block, badges, and compliance copy */
+    .security {
+      background: radial-gradient(circle at top left, rgba(26, 107, 245, 0.2), transparent 34%), linear-gradient(180deg, #0f172a 0%, #111b2c 100%);
+      color: var(--white);
+    }
+
+    .security__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .security__title,
+    .security__subtitle {
+      color: var(--white);
+    }
+
+    .security__subtitle {
+      color: var(--neutral-300);
+    }
+
+    .security__visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 420px;
+    }
+
+    .security__ring {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(10, 191, 184, 0.28);
+      animation: pulseRing 3.2s ease-in-out infinite;
+    }
+
+    .security__shield {
+      width: min(100%, 360px);
+      filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.24));
+    }
+
+    .security__list {
+      display: grid;
+      gap: var(--space-5);
+      margin: 0 0 var(--space-8);
+      padding: 0;
+      list-style: none;
+    }
+
+    .security__item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: var(--space-4);
+      align-items: start;
+      padding: var(--space-4);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .security__item-icon {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      color: var(--secondary);
+      background: rgba(10, 191, 184, 0.12);
+    }
+
+    .security__item strong {
+      display: block;
+      margin-bottom: var(--space-1);
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .security__item p {
+      margin: 0;
+      color: var(--neutral-300);
+    }
+
+    .security__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .security__badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    /* AI capabilities split layout, demo chat styling, prompts, and copy blocks */
+    .ai__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    .ai__highlights {
+      display: grid;
+      gap: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+
+    .ai__highlight {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(250, 252, 255, 0.94));
+      box-shadow: none;
+    }
+
+    .ai__highlight h3 {
+      margin: 0 0 var(--space-2);
+      color: var(--neutral-900);
+      font-size: 1.25rem;
+    }
+
+    .ai__highlight p,
+    .ai-chat__message p {
+      margin: 0;
+      color: var(--neutral-600);
+    }
+
+    .ai__prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .ai__prompt {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(26, 107, 245, 0.06);
+      color: #174ea6;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(26, 107, 245, 0.08);
+    }
+
+    .ai-chat {
+      padding: 28px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+    }
+
+    .ai-chat__topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-5);
+    }
+
+    .ai-chat__status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--neutral-500);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .ai-chat__dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.14);
+    }
+
+    .ai-chat__thread {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .ai-chat__message {
+      max-width: 88%;
+      padding: var(--space-4) var(--space-5);
+      border-radius: 20px;
+      font-size: 0.96rem;
+    }
+
+    .ai-chat__message--user {
+      margin-left: auto;
+      background: #1a73e8;
+      color: var(--white);
+      border-bottom-right-radius: 8px;
+      box-shadow: 0 8px 18px rgba(26, 115, 232, 0.18);
+    }
+
+    .ai-chat__message--assistant {
+      background: #f3f7fc;
+      color: var(--neutral-800);
+      border-bottom-left-radius: 8px;
+    }
+
+    .ai-chat__source {
+      margin-top: var(--space-3);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    /* Testimonial cards, rating stars, avatar chips, and grid responsiveness */
+    .testimonials {
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0.9), rgba(255, 255, 255, 1));
+    }
+
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .testimonial {
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--white);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: none;
+    }
+
+    .testimonial__stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: var(--space-4);
+      color: #fbbf24;
+    }
+
+    .testimonial__quote {
+      margin: 0 0 var(--space-6);
+      color: var(--neutral-600);
+      font-style: normal;
+      font-size: 1rem;
+    }
+
+    .testimonial__author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .testimonial__avatar {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(26, 107, 245, 0.14), rgba(124, 58, 237, 0.16));
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .testimonial__meta strong {
+      display: block;
+      color: var(--neutral-900);
+    }
+
+    .testimonial__meta span {
+      color: var(--neutral-500);
+      font-size: 0.9rem;
+    }
+
+    /* Pricing cards, toggle switch, animated price values, and feature matrices */
+    .pricing__top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-6);
+      margin-bottom: var(--space-12);
+    }
+
+    .pricing__toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 6px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      border: 1px solid rgba(226, 232, 240, 0.96);
+    }
+
+    .pricing__toggle-button {
+      min-width: 120px;
+      padding: var(--space-3) var(--space-4);
+      border-radius: 999px;
+      color: var(--neutral-600);
+      font-weight: 600;
+      transition: background var(--transition-base), color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .pricing__toggle-button.pricing__toggle-button--active {
+      background: var(--white);
+      color: var(--neutral-900);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .pricing-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      padding: 32px;
+      border-radius: 28px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      background: var(--white);
+      box-shadow: none;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-card--featured {
+      transform: scale(1.01);
+      border: 2px solid rgba(26, 107, 245, 0.22);
+      box-shadow: 0 16px 36px rgba(26, 107, 245, 0.1);
+    }
+
+    .pricing-card__badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(26, 107, 245, 0.08);
+      color: #174ea6;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pricing-card__header h3 {
+      margin: 0 0 var(--space-2);
+      color: var(--neutral-900);
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-card__header p {
+      margin: 0;
+      color: var(--neutral-500);
+      max-width: 26ch;
+    }
+
+    .pricing-card__price-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-2);
+      min-height: 72px;
+    }
+
+    .pricing-card__price {
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--neutral-900);
+      letter-spacing: -0.04em;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .pricing-card__price.pricing-card__price--changing {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .pricing-card__period {
+      color: var(--neutral-500);
+      font-weight: 500;
+    }
+
+    .pricing-card__list {
+      display: grid;
+      gap: var(--space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pricing-card__list li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--neutral-600);
+    }
+
+    .pricing-card__list-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .pricing-card__list-icon--yes {
+      background: rgba(16, 185, 129, 0.14);
+      color: var(--success);
+    }
+
+    .pricing-card__list-icon--no {
+      background: rgba(148, 163, 184, 0.14);
+      color: var(--neutral-400);
+    }
+
+    /* Final call-to-action section with gradient background and centered content */
+    .final-cta {
+      padding: var(--space-20) 0;
+      background: linear-gradient(135deg, #1a73e8 0%, #1558d6 100%);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .final-cta__title {
+      margin: 0 0 var(--space-4);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .final-cta__subtitle {
+      max-width: 640px;
+      margin: 0 auto var(--space-8);
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .final-cta__meta {
+      margin-top: var(--space-5);
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* Footer columns, social links, and lower legal navigation */
+    .footer {
+      padding: var(--space-16) 0 var(--space-8);
+      background: #0f172a;
+      color: var(--neutral-300);
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: var(--space-8);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .footer__title {
+      margin: 0 0 var(--space-4);
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .footer__tagline {
+      max-width: 300px;
+      margin: var(--space-4) 0 0;
+      color: var(--neutral-400);
+    }
+
+    .footer__list {
+      display: grid;
+      gap: var(--space-3);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .footer__list a {
+      color: var(--neutral-300);
+      transition: color var(--transition-base);
+    }
+
+    .footer__list a:hover,
+    .footer__social-link:hover,
+    .footer__legal a:hover {
+      color: var(--white);
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .footer__social-link {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--neutral-300);
+      transition: background var(--transition-base), color var(--transition-base);
+    }
+
+    .footer__social-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-top: var(--space-6);
+      font-size: 0.9rem;
+      color: var(--neutral-400);
+    }
+
+    .footer__legal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    /* Modal shell, overlay transitions, form controls, wizard steps, and OTP inputs */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+    }
+
+    .modal.modal--open {
+      display: flex;
+      animation: modalFadeIn 280ms ease-out;
+    }
+
+    .modal__dialog {
+      width: min(100%, 480px);
+      max-height: min(92vh, 820px);
+      overflow: auto;
+      position: relative;
+      padding: var(--space-8);
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      animation: modalSlideUp 280ms ease-out forwards;
+    }
+
+    .modal__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--neutral-600);
+      background: var(--neutral-100);
+    }
+
+    .modal__header {
+      margin-bottom: var(--space-6);
+    }
+
+    .modal__title {
+      margin: 0 0 var(--space-2);
+      color: var(--neutral-900);
+      font-size: 1.75rem;
+      line-height: 1.2;
+    }
+
+    .modal__subtitle {
+      margin: 0;
+      color: var(--neutral-600);
+    }
+
+    .modal__progress {
+      width: 100%;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--neutral-100);
+      margin-bottom: var(--space-6);
+    }
+
+    .modal__progress-bar {
+      width: 33.333%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width var(--transition-slow);
+    }
+
+    .modal__step,
+    .login__step {
+      display: none;
+      gap: var(--space-5);
+    }
+
+    .modal__step.modal__step--active,
+    .login__step.login__step--active {
+      display: grid;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .form-grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .field__label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--neutral-700);
+    }
+
+    .field__hint {
+      color: var(--neutral-500);
+      font-size: 0.85rem;
+    }
+
+    .field__error {
+      min-height: 20px;
+      color: var(--danger);
+      font-size: 0.82rem;
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      min-height: 54px;
+      padding: 0 var(--space-4);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 18px;
+      background: var(--white);
+      transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .input-wrap:focus-within {
+      border-color: rgba(26, 107, 245, 0.55);
+      box-shadow: 0 0 0 4px rgba(26, 107, 245, 0.08);
+    }
+
+    .input,
+    .select {
+      width: 100%;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--neutral-900);
+    }
+
+    .input::placeholder {
+      color: var(--neutral-400);
+    }
+
+    .country-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding-right: var(--space-2);
+      color: var(--neutral-700);
+      font-weight: 600;
+      border-right: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .otp {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .otp__inputs {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: var(--space-3);
+    }
+
+    .otp__input {
+      width: 100%;
+      min-height: 58px;
+      text-align: center;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .otp__input:focus {
+      border-color: rgba(26, 107, 245, 0.55);
+      box-shadow: 0 0 0 4px rgba(26, 107, 245, 0.08);
+      outline: none;
+    }
+
+    .otp__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      color: var(--neutral-500);
+      font-size: 0.9rem;
+    }
+
+    .segmented {
+      display: flex;
+      gap: var(--space-2);
+      padding: var(--space-1);
+      border-radius: 18px;
+      background: var(--neutral-100);
+    }
+
+    .segmented__option {
+      flex: 1;
+      padding: var(--space-3);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--neutral-600);
+      transition: background var(--transition-base), color var(--transition-base);
+    }
+
+    .segmented__option.segmented__option--active {
+      background: var(--white);
+      color: var(--neutral-900);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .biometric {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(26, 107, 245, 0.08), rgba(124, 58, 237, 0.08));
+      color: var(--neutral-600);
+      font-weight: 600;
+    }
+
+    .modal__footer-link {
+      text-align: center;
+      color: var(--neutral-600);
+      font-size: 0.92rem;
+    }
+
+    .modal__footer-link button {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Generic reveal animation hooks powered by IntersectionObserver */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 500ms ease, transform 500ms ease;
+      transition-delay: var(--delay, 0ms);
+    }
+
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Keyframe animations for hero shapes, cursor blink, modal entrance, and illustration pulses */
+    @keyframes floatBlob {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.06); }
+    }
+
+    @keyframes floatPhone {
+      0%, 100% { transform: translateY(-6px); }
+      50% { transform: translateY(8px); }
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(0.94); opacity: 0.45; }
+      50% { transform: scale(1.02); opacity: 0.85; }
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px); }
+      to { transform: translateY(0); }
+    }
+
+    /* Responsive behavior for tablet layouts, mobile stacking, and component resizing */
+    @media (max-width: 1024px) {
+      .nav__links,
+      .nav__actions {
+        display: none;
+      }
+
+      .nav__toggle {
+        display: inline-flex;
+      }
+
+      .hero__grid,
+      .security__grid,
+      .ai__grid,
+      .pricing__grid,
+      .footer__grid,
+      .testimonials__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero__grid,
+      .security__grid,
+      .ai__grid {
+        gap: var(--space-10);
+      }
+
+      .stats__grid,
+      .how__stepper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .how__stepper::before {
+        display: none;
+      }
+
+      .pricing__top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .pipeline__flow {
+        grid-template-columns: 1fr;
+      }
+
+      .pipeline__arrow {
+        width: 2px;
+        height: 32px;
+        justify-self: center;
+        transform: none;
+        background: linear-gradient(180deg, rgba(26, 107, 245, 0.2), rgba(26, 107, 245, 0.9));
+      }
+
+      .pipeline__arrow::after {
+        top: auto;
+        bottom: 0;
+        left: -4px;
+        right: auto;
+        transform: rotate(135deg);
+      }
+    }
+
+    @media (max-width: 639px) {
+      .container {
+        width: min(calc(100% - 24px), var(--container-width));
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: var(--space-6);
+      }
+
+      .hero__grid,
+      .features__grid,
+      .security__grid,
+      .ai__grid,
+      .testimonials__grid,
+      .pricing__grid,
+      .stats__grid,
+      .footer__grid,
+      .how__stepper,
+      .form-grid--two {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__actions,
+      .hero__proof,
+      .footer__bottom,
+      .otp__meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero__phone {
+        width: 100%;
+      }
+
+      .hero__query {
+        position: static;
+        width: 100%;
+        margin-top: var(--space-4);
+      }
+
+      .timeline {
+        min-height: auto;
+      }
+
+      .stats__item {
+        text-align: left;
+      }
+
+      .nav {
+        min-height: 72px;
+        padding: 0 var(--space-4);
+        border-radius: 18px;
+      }
+
+      .modal__dialog {
+        padding: var(--space-6);
+      }
+
+      .otp__inputs {
+        gap: var(--space-2);
+      }
+
+      .pricing-card--featured {
+        transform: none;
+      }
+    }
+
+    /* Dark mode variable overrides and component polish for system dark preference */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --neutral-50: #020617;
+        --neutral-100: #0f172a;
+        --neutral-200: #1e293b;
+        --neutral-300: #334155;
+        --neutral-400: #64748b;
+        --neutral-500: #94a3b8;
+        --neutral-600: #cbd5e1;
+        --neutral-800: #e2e8f0;
+        --neutral-900: #f8fafc;
+        --white: #0f172a;
+      }
+
+      body {
+        background: linear-gradient(180deg, #020617 0%, #0b1120 40%, #020617 100%);
+      }
+
+      .nav,
+      .mobile-nav,
+      .feature-card,
+      .testimonial,
+      .pricing-card,
+      .pipeline,
+      .ai-chat,
+      .ai__highlight,
+      .timeline,
+      .timeline__summary-card,
+      .timeline__record,
+      .modal__dialog {
+        background: rgba(15, 23, 42, 0.92);
+        border-color: rgba(71, 85, 105, 0.5);
+      }
+
+      .button--ghost,
+      .how__step {
+        background: rgba(15, 23, 42, 0.72);
+      }
+
+      .input-wrap,
+      .otp__input {
+        background: rgba(15, 23, 42, 0.85);
+        border-color: rgba(71, 85, 105, 0.7);
+      }
+
+      .pricing__toggle,
+      .segmented,
+      .modal__progress {
+        background: rgba(15, 23, 42, 0.82);
+      }
+    }
+
+    /* Reduced motion support for accessibility by disabling non-essential animation */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <!-- Navbar -->
+    <header class="nav-wrap" id="top">
+      <div class="container">
+        <nav class="nav" aria-label="Primary navigation">
+          <a class="nav__brand" href="#home" data-nav-target="home">
+            <span class="nav__brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <path d="M24 5L38 11V23C38 31.8 31.8 39.9 24 43C16.2 39.9 10 31.8 10 23V11L24 5Z" stroke="#1A6BF5" stroke-width="2.6" stroke-linejoin="round"/>
+                <path d="M14 24H19L22 18L26 29L29 23H34" stroke="#0ABFB8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>MediVault</span>
+          </a>
+          <div class="nav__links">
+            <a class="nav__link nav__link--active" href="#home" data-nav-target="home">Home</a>
+            <a class="nav__link" href="#features" data-nav-target="features">Features</a>
+            <a class="nav__link" href="#how-it-works" data-nav-target="how-it-works">How It Works</a>
+            <a class="nav__link" href="#security" data-nav-target="security">Security</a>
+            <a class="nav__link" href="#pricing" data-nav-target="pricing">Pricing</a>
+          </div>
+          <div class="nav__actions">
+            <button class="button button--ghost" type="button" data-modal-trigger="login">Log in</button>
+            <button class="button button--primary" type="button" data-modal-trigger="signup">
+              Get Started
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <button class="nav__toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+            <svg class="nav__toggle-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </nav>
+        <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+          <a class="mobile-nav__link mobile-nav__link--active" href="#home" data-nav-target="home">Home</a>
+          <a class="mobile-nav__link" href="#features" data-nav-target="features">Features</a>
+          <a class="mobile-nav__link" href="#how-it-works" data-nav-target="how-it-works">How It Works</a>
+          <a class="mobile-nav__link" href="#security" data-nav-target="security">Security</a>
+          <a class="mobile-nav__link" href="#pricing" data-nav-target="pricing">Pricing</a>
+          <div class="mobile-nav__actions">
+            <button class="button button--ghost" type="button" data-modal-trigger="login">Log in</button>
+            <button class="button button--primary" type="button" data-modal-trigger="signup">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="section hero" id="home" aria-labelledby="hero-title">
+        <div class="hero__background" aria-hidden="true">
+          <div class="hero__blob hero__blob--one"></div>
+          <div class="hero__blob hero__blob--two"></div>
+          <div class="hero__blob hero__blob--three"></div>
+        </div>
+        <div class="container hero__grid">
+          <div data-animate>
+            <div class="pill hero__trust-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 11V8.5C6 5.46 8.46 3 11.5 3C14.54 3 17 5.46 17 8.5V11" stroke="#1A6BF5" stroke-width="1.8" stroke-linecap="round"/>
+                <rect x="4" y="11" width="15" height="10" rx="3" stroke="#1A6BF5" stroke-width="1.8"/>
+                <path d="M11.5 14.5V17.5" stroke="#0ABFB8" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <span>DPDP Act 2023 Compliant · ABDM Ready</span>
+            </div>
+            <h1 class="hero__headline" id="hero-title">Your Complete Medical History. <span class="hero__headline-accent">One Secure Vault.</span></h1>
+            <p class="hero__subheadline">Upload any medical document. AI extracts, organizes, and explains your full health story. Share with any doctor in 30 seconds — with full consent control.</p>
+            <div class="hero__actions">
+              <button class="button button--primary" type="button" data-modal-trigger="signup">
+                Get Started Free
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12H19M13 6L19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <a class="button button--ghost" href="#how-it-works" data-watch-link>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 6L18 12L8 18V6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                Watch how it works
+              </a>
+            </div>
+            <div class="hero__proof" aria-label="Social proof">
+              <strong>Trusted by 5,000+ patients</strong>
+              <span>·</span>
+              <span>1M+ documents processed</span>
+              <span>·</span>
+              <span>4.9★ rating</span>
+            </div>
+          </div>
+          <div class="hero__mockup-wrap" data-animate>
+            <div class="hero__phone" aria-label="MediVault dashboard preview">
+              <div class="hero__phone-notch" aria-hidden="true"></div>
+              <div class="timeline">
+                <div class="timeline__header">
+                  <div>
+                    <p class="section__eyebrow">Health Timeline</p>
+                    <h2 class="timeline__title">All records, one patient-owned view</h2>
+                  </div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 5V19M5 12H19" stroke="#1A6BF5" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="timeline__summary">
+                  <div class="timeline__summary-card">
+                    <strong>14</strong>
+                    <span>reports indexed</span>
+                  </div>
+                  <div class="timeline__summary-card">
+                    <strong>2</strong>
+                    <span>anomalies flagged</span>
+                  </div>
+                </div>
+                <div class="timeline__records" aria-live="polite">
+                  <article class="timeline__record">
+                    <div class="timeline__record-head">
+                      <div>
+                        <span class="timeline__badge timeline__badge--lab">Lab Report</span>
+                        <h3 class="timeline__record-title">Complete Blood Count</h3>
+                      </div>
+                      <span class="timeline__status" aria-label="Processed"></span>
+                    </div>
+                    <p class="timeline__record-meta">12 Jan 2025 · Dr. Lal PathLabs</p>
+                    <p class="timeline__record-copy">Hemoglobin 12.8 g/dL, Ferritin 42 ng/mL, Glucose fasting 96 mg/dL.</p>
+                  </article>
+                  <article class="timeline__record">
+                    <div class="timeline__record-head">
+                      <div>
+                        <span class="timeline__badge timeline__badge--rx">Prescription</span>
+                        <h3 class="timeline__record-title">Endocrinology Follow-Up</h3>
+                      </div>
+                      <span class="timeline__status" aria-label="Reviewed"></span>
+                    </div>
+                    <p class="timeline__record-meta">04 Nov 2024 · Apollo Clinic</p>
+                    <p class="timeline__record-copy">Metformin 500 mg OD, Vit D3 weekly, next HbA1c review in 12 weeks.</p>
+                  </article>
+                  <article class="timeline__record">
+                    <div class="timeline__record-head">
+                      <div>
+                        <span class="timeline__badge timeline__badge--discharge">Discharge</span>
+                        <h3 class="timeline__record-title">Cardiac Observation Stay</h3>
+                      </div>
+                      <span class="timeline__status" aria-label="Shared"></span>
+                    </div>
+                    <p class="timeline__record-meta">18 Aug 2024 · Fortis Hospital</p>
+                    <p class="timeline__record-copy">Discharge summary indexed. Echo normal. Medication reconciliation complete.</p>
+                  </article>
+                  <article class="timeline__record">
+                    <div class="timeline__record-head">
+                      <div>
+                        <span class="timeline__badge timeline__badge--lab">Radiology</span>
+                        <h3 class="timeline__record-title">Chest X-ray</h3>
+                      </div>
+                      <span class="timeline__status" aria-label="Classified"></span>
+                    </div>
+                    <p class="timeline__record-meta">07 Jun 2024 · Scan Centre</p>
+                    <p class="timeline__record-copy">Image OCR complete. Impression extracted and linked to pulmonology timeline.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="hero__query" aria-live="polite">
+              <span class="hero__query-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9.5 5H14.5L19 9.5V14.5L14.5 19H9.5L5 14.5V9.5L9.5 5Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.6"/>
+                  <path d="M9 12H15" stroke="rgba(255,255,255,0.92)" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                AI Query
+              </span>
+              <p class="hero__query-text" id="hero-typing-text"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Bar -->
+      <section class="stats" aria-label="Platform statistics">
+        <div class="container">
+          <div class="stats__grid" id="stats-bar">
+            <div class="stats__item" data-animate>
+              <span class="stats__number" data-stat-target="50000" data-stat-suffix="+">0</span>
+              <span class="stats__label">Documents Processed</span>
+            </div>
+            <div class="stats__item" data-animate>
+              <span class="stats__number" data-stat-target="10000" data-stat-suffix="+">0</span>
+              <span class="stats__label">Patients</span>
+            </div>
+            <div class="stats__item" data-animate>
+              <span class="stats__number" data-stat-target="99.9" data-stat-suffix="%">0</span>
+              <span class="stats__label">Uptime</span>
+            </div>
+            <div class="stats__item" data-animate>
+              <span class="stats__number" data-stat-target="90" data-stat-prefix="< ">0</span>
+              <span class="stats__label">Seconds Processing Time</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="container">
+          <div class="section__header" data-animate>
+            <span class="section__eyebrow">Capabilities</span>
+            <h2 class="section__title" id="features-title">Everything your health records need</h2>
+            <p class="section__subtitle">From raw scans to pre-visit intelligence, MediVault turns fragmented records into one trusted longitudinal health layer.</p>
+          </div>
+          <div class="features__grid">
+            <article class="feature-card" data-animate data-delay="0">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 3H16L20 7V19C20 20.1 19.1 21 18 21H8C6.9 21 6 20.1 6 19V5C6 3.9 6.9 3 8 3Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M9 13L11 15L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">Smart OCR Processing</h3>
+              <p class="feature-card__text">Handles PDFs, scanned images, X-rays. 95%+ accuracy with OpenCV preprocessing.</p>
+            </article>
+            <article class="feature-card" data-animate data-delay="80">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3L15.2 9.4L22 10.3L17 15.1L18.2 22L12 18.7L5.8 22L7 15.1L2 10.3L8.8 9.4L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">AI Health Intelligence</h3>
+              <p class="feature-card__text">LangGraph agent answers natural language questions with citations from your own records.</p>
+            </article>
+            <article class="feature-card" data-animate data-delay="160">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 8H6C4.9 8 4 8.9 4 10V18C4 19.1 4.9 20 6 20H14C15.1 20 16 19.1 16 18V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M14 4H20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M10 14L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">QR Consent Sharing</h3>
+              <p class="feature-card__text">Generate a 60-minute scoped access token. Doctor scans, sees exactly what you share. Expires automatically.</p>
+            </article>
+            <article class="feature-card" data-animate data-delay="240">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 17L9 12L13 15L20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20 12V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">Lab Trend Analytics</h3>
+              <p class="feature-card__text">Track Hemoglobin, Glucose, and 50+ parameters across all your reports on a visual timeline.</p>
+            </article>
+            <article class="feature-card" data-animate data-delay="320">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3L4 7V12C4 16.4 7.1 20.3 12 21C16.9 20.3 20 16.4 20 12V7L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9.5 12.5L11 14L14.5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">Anomaly Detection</h3>
+              <p class="feature-card__text">ML model flags readings outside WHO/ICMR reference ranges before your next appointment.</p>
+            </article>
+            <article class="feature-card" data-animate data-delay="400">
+              <div class="feature-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 4H18M6 8H18M7 12H17M9 16H15M11 20H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3 class="feature-card__title">Immutable Audit Log</h3>
+              <p class="feature-card__text">Every access is logged. See who viewed what, when, with full revocation control.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="section how" id="how-it-works" aria-labelledby="how-title">
+        <div class="container">
+          <div class="section__header" data-animate>
+            <span class="section__eyebrow">Workflow</span>
+            <h2 class="section__title" id="how-title">From upload to insight in under 90 seconds</h2>
+            <p class="section__subtitle">A focused pipeline that moves from raw scans to searchable, structured intelligence without asking patients to re-enter their history.</p>
+          </div>
+          <div class="how__stepper" role="tablist" aria-label="How MediVault works">
+            <button class="how__step how__step--active" type="button" role="tab" aria-selected="true" data-step="0" data-animate data-delay="0">
+              <span class="how__step-index">1</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4V16M12 16L7 11M12 16L17 11M5 20H19" stroke="#1A6BF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="how__step-title">Upload</h3>
+              <p class="how__step-copy">Photograph or upload any medical document — PDF, image, or scan.</p>
+            </button>
+            <button class="how__step" type="button" role="tab" aria-selected="false" data-step="1" data-animate data-delay="80">
+              <span class="how__step-index">2</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 7H17V17H7V7Z" stroke="#1A6BF5" stroke-width="2"/>
+                <path d="M10 10H14M10 14H13" stroke="#0ABFB8" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <h3 class="how__step-title">Process</h3>
+              <p class="how__step-copy">AI pipeline runs OCR, classifies the document type, extracts all clinical entities.</p>
+            </button>
+            <button class="how__step" type="button" role="tab" aria-selected="false" data-step="2" data-animate data-delay="160">
+              <span class="how__step-index">3</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 12C4 8.13 7.13 5 11 5H16C18.76 5 21 7.24 21 10C21 12.76 18.76 15 16 15H10" stroke="#1A6BF5" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 19L4 15L8 11" stroke="#0ABFB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="how__step-title">Analyze</h3>
+              <p class="how__step-copy">Structured data enters your vault. AI indexes it for instant Q&amp;A.</p>
+            </button>
+            <button class="how__step" type="button" role="tab" aria-selected="false" data-step="3" data-animate data-delay="240">
+              <span class="how__step-index">4</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 17C16.42 17 20 13.42 20 9C20 7.34 19.5 5.8 18.64 4.52L4 19.16" stroke="#1A6BF5" stroke-width="2" stroke-linecap="round"/>
+                <path d="M11 21L7 17L11 13" stroke="#0ABFB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="how__step-title">Share</h3>
+              <p class="how__step-copy">Generate a QR code. Doctor scans and sees a scoped, expiring view of your records.</p>
+            </button>
+          </div>
+          <div class="pipeline" data-animate>
+            <div class="pipeline__flow" aria-label="Upload to vault pipeline">
+              <div class="pipeline__node">
+                <div class="pipeline__chip">Upload</div>
+                <span>PDF, image, scan</span>
+              </div>
+              <div class="pipeline__arrow" aria-hidden="true"></div>
+              <div class="pipeline__node">
+                <div class="pipeline__chip">OCR + NLP</div>
+                <span>Text extraction + NER</span>
+              </div>
+              <div class="pipeline__arrow" aria-hidden="true"></div>
+              <div class="pipeline__node">
+                <div class="pipeline__chip">Embed + Vault</div>
+                <span>RAG-ready structured storage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security & Privacy -->
+      <section class="section security" id="security" aria-labelledby="security-title">
+        <div class="container security__grid">
+          <div class="security__visual" data-animate>
+            <div class="security__ring" aria-hidden="true"></div>
+            <svg class="security__shield" viewBox="0 0 320 360" fill="none" aria-hidden="true">
+              <path d="M160 20L258 60V152C258 225 218 290 160 326C102 290 62 225 62 152V60L160 20Z" fill="url(#shield-gradient)"/>
+              <path d="M160 20L258 60V152C258 225 218 290 160 326C102 290 62 225 62 152V60L160 20Z" stroke="rgba(255,255,255,0.35)" stroke-width="4"/>
+              <path d="M112 169H142L156 140L178 206L194 172H222" stroke="#A7F3D0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="160" cy="156" r="84" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-dasharray="8 8"/>
+              <defs>
+                <linearGradient id="shield-gradient" x1="62" y1="20" x2="267" y2="326" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#1A6BF5"/>
+                  <stop offset="1" stop-color="#0ABFB8"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div data-animate>
+            <div class="section__header">
+              <span class="section__eyebrow">Security</span>
+              <h2 class="section__title security__title" id="security-title">Designed for trust from the first upload</h2>
+              <p class="section__subtitle security__subtitle">Healthcare data is personal infrastructure. MediVault is built around patient ownership, time-bound consent, and visible accountability.</p>
+            </div>
+            <ul class="security__list">
+              <li class="security__item">
+                <span class="security__item-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 11V8.5C8 6.01 10.01 4 12.5 4C14.99 4 17 6.01 17 8.5V11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div><strong>AES-256 Encryption</strong><p>All files encrypted at rest in MinIO. TLS 1.3 in transit.</p></div>
+              </li>
+              <li class="security__item">
+                <span class="security__item-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8.5 13C9.17 14.33 10.46 15.25 12 15.25C13.54 15.25 14.83 14.33 15.5 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M9 10.25H9.01M15 10.25H15.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div><strong>Patient-Owned Data</strong><p>We don't sell, share, or access your data. Ever.</p></div>
+              </li>
+              <li class="security__item">
+                <span class="security__item-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3L19 7V12C19 16.42 16.42 20.26 12 21C7.58 20.26 5 16.42 5 12V7L12 3Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <div><strong>Granular Consent</strong><p>Issue scoped access tokens. Revoke any time. Audit every access.</p></div>
+              </li>
+              <li class="security__item">
+                <span class="security__item-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 4H17L20 7V20H4V7L7 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M8 10H16M8 14H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <div><strong>DPDP Act 2023</strong><p>Right to erasure, data minimization, consent-first architecture.</p></div>
+              </li>
+            </ul>
+            <div class="security__badges" aria-label="Compliance badges">
+              <span class="security__badge">ISO 27001</span>
+              <span class="security__badge">ABDM Ready</span>
+              <span class="security__badge">DPDP Compliant</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Capabilities -->
+      <section class="section" id="ai" aria-labelledby="ai-title">
+        <div class="container ai__grid">
+          <div data-animate>
+            <div class="section__header">
+              <span class="section__eyebrow">AI Layer</span>
+              <h2 class="section__title" id="ai-title">Ask your medical history like it already knows you</h2>
+              <p class="section__subtitle">Built for real patient workflows: longitudinal labs, medication clarity, appointment prep, and voice-first access.</p>
+            </div>
+            <div class="ai__highlights">
+              <article class="ai__highlight">
+                <h3>Natural Language Queries</h3>
+                <p>Ask anything about your health history in plain English or Hindi.</p>
+              </article>
+              <article class="ai__highlight">
+                <h3>Pre-Visit Summaries</h3>
+                <p>AI generates a one-page briefing 12 hours before every appointment.</p>
+              </article>
+              <article class="ai__highlight">
+                <h3>Voice Interface</h3>
+                <p>Speak your query. Deepgram transcribes and routes it to the AI agent.</p>
+              </article>
+            </div>
+            <div class="ai__prompts" aria-label="Example prompts">
+              <span class="ai__prompt">What medications am I on?</span>
+              <span class="ai__prompt">Is my blood pressure normal?</span>
+              <span class="ai__prompt">Summarize my last discharge summary</span>
+            </div>
+          </div>
+          <div class="ai-chat" data-animate>
+            <div class="ai-chat__topbar">
+              <strong>MediVault AI</strong>
+              <span class="ai-chat__status"><span class="ai-chat__dot" aria-hidden="true"></span>Live record-aware demo</span>
+            </div>
+            <div class="ai-chat__thread" aria-live="polite">
+              <div class="ai-chat__message ai-chat__message--user">
+                <p>Show me my Hemoglobin trend over the last year</p>
+              </div>
+              <div class="ai-chat__message ai-chat__message--assistant">
+                <p>Your hemoglobin has ranged from 10.2 g/dL (Mar 2024) to 12.8 g/dL (Jan 2025). It's trending upward — the last reading is within normal range.</p>
+                <div class="ai-chat__source">[Source: Lab Report Mar 2024, Jan 2025]<span class="ai-chat__cursor" aria-hidden="true"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="section testimonials" id="testimonials" aria-labelledby="testimonials-title">
+        <div class="container">
+          <div class="section__header" data-animate>
+            <span class="section__eyebrow">Stories</span>
+            <h2 class="section__title" id="testimonials-title">Patients who finally have control</h2>
+            <p class="section__subtitle">Chronic care, specialist coordination, and insurance-heavy journeys feel lighter when records stop living in WhatsApp threads and paper folders.</p>
+          </div>
+          <div class="testimonials__grid">
+            <article class="testimonial" data-animate data-delay="0">
+              <div class="testimonial__stars" aria-label="5 star rating">★★★★★</div>
+              <p class="testimonial__quote">“I manage diabetes across 3 specialists. MediVault finally shows all my HbA1c readings in one place.”</p>
+              <div class="testimonial__author">
+                <span class="testimonial__avatar">PS</span>
+                <div class="testimonial__meta">
+                  <strong>Priya S.</strong>
+                  <span>Mumbai · Managing Diabetes</span>
+                </div>
+              </div>
+            </article>
+            <article class="testimonial" data-animate data-delay="80">
+              <div class="testimonial__stars" aria-label="5 star rating">★★★★★</div>
+              <p class="testimonial__quote">“The QR share saved me 30 minutes at my cardiologist. He had my full history in seconds.”</p>
+              <div class="testimonial__author">
+                <span class="testimonial__avatar">RK</span>
+                <div class="testimonial__meta">
+                  <strong>Rajesh K.</strong>
+                  <span>Bangalore · Post-cardiac care</span>
+                </div>
+              </div>
+            </article>
+            <article class="testimonial" data-animate data-delay="160">
+              <div class="testimonial__stars" aria-label="5 star rating">★★★★★</div>
+              <p class="testimonial__quote">“It found that two of my prescriptions had a potential interaction. My doctor didn't even catch it.”</p>
+              <div class="testimonial__author">
+                <span class="testimonial__avatar">AM</span>
+                <div class="testimonial__meta">
+                  <strong>Ananya M.</strong>
+                  <span>Delhi · Chronic hypertension</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="section" id="pricing" aria-labelledby="pricing-title">
+        <div class="container">
+          <div class="pricing__top">
+            <div class="section__header" data-animate>
+              <span class="section__eyebrow">Pricing</span>
+              <h2 class="section__title" id="pricing-title">Start free, upgrade when your care network grows</h2>
+              <p class="section__subtitle">A lightweight personal plan for getting organized, with room for multi-person families and richer AI workflows.</p>
+            </div>
+            <div class="pricing__toggle" role="group" aria-label="Billing frequency" data-animate>
+              <button class="pricing__toggle-button pricing__toggle-button--active" type="button" data-billing="monthly">Monthly</button>
+              <button class="pricing__toggle-button" type="button" data-billing="annual">Annual</button>
+            </div>
+          </div>
+          <div class="pricing__grid">
+            <article class="pricing-card" data-animate data-delay="0">
+              <div class="pricing-card__header">
+                <h3>Free</h3>
+                <p>For solo patients starting their digital record journey.</p>
+              </div>
+              <div class="pricing-card__price-row">
+                <span class="pricing-card__price" data-monthly="₹0" data-annual="₹0">₹0</span>
+                <span class="pricing-card__period">/month</span>
+              </div>
+              <ul class="pricing-card__list">
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Store up to 50 records</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Basic OCR and organization</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>QR share links</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--no">—</span>Advanced AI summaries</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--no">—</span>Family member vaults</li>
+              </ul>
+              <button class="button button--ghost" type="button" data-modal-trigger="signup">Start Free</button>
+            </article>
+            <article class="pricing-card pricing-card--featured" data-animate data-delay="80">
+              <span class="pricing-card__badge">Most Popular</span>
+              <div class="pricing-card__header">
+                <h3>Pro</h3>
+                <p>For chronic care, specialist visits, and appointment prep.</p>
+              </div>
+              <div class="pricing-card__price-row">
+                <span class="pricing-card__price" data-monthly="₹299" data-annual="₹239">₹299</span>
+                <span class="pricing-card__period">/month</span>
+              </div>
+              <ul class="pricing-card__list">
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Unlimited record uploads</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>LangGraph AI Q&amp;A with citations</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Lab anomaly alerts and trends</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Pre-visit briefings</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--no">—</span>Up to 5 family vaults</li>
+              </ul>
+              <button class="button button--primary" type="button" data-modal-trigger="signup">Choose Pro</button>
+            </article>
+            <article class="pricing-card" data-animate data-delay="160">
+              <div class="pricing-card__header">
+                <h3>Family</h3>
+                <p>For households coordinating parents, children, and dependents.</p>
+              </div>
+              <div class="pricing-card__price-row">
+                <span class="pricing-card__price" data-monthly="₹799" data-annual="₹639">₹799</span>
+                <span class="pricing-card__period">/month</span>
+              </div>
+              <ul class="pricing-card__list">
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Up to 5 family vaults</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Shared caregiver access controls</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Priority processing</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Voice query support</li>
+                <li><span class="pricing-card__list-icon pricing-card__list-icon--yes">✓</span>Advanced audit visibility</li>
+              </ul>
+              <button class="button button--ghost" type="button" data-modal-trigger="signup">Choose Family</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="final-cta" aria-labelledby="cta-title">
+        <div class="container" data-animate>
+          <h2 class="final-cta__title" id="cta-title">Your health story, finally in one place.</h2>
+          <p class="final-cta__subtitle">Join 10,000+ patients who own their medical records.</p>
+          <button class="button button--light" type="button" data-modal-trigger="signup">Create Free Account</button>
+          <div class="final-cta__meta">No credit card required · Cancel anytime · Your data, your control</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grid">
+          <div>
+            <a class="nav__brand" href="#home" data-nav-target="home">
+              <span class="nav__brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M24 5L38 11V23C38 31.8 31.8 39.9 24 43C16.2 39.9 10 31.8 10 23V11L24 5Z" stroke="#1A6BF5" stroke-width="2.6" stroke-linejoin="round"/>
+                  <path d="M14 24H19L22 18L26 29L29 23H34" stroke="#0ABFB8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>MediVault</span>
+            </a>
+            <p class="footer__tagline">Patient-owned AI medical intelligence for safer care journeys, faster appointments, and records that actually stay with you.</p>
+          </div>
+          <div>
+            <h3 class="footer__title">Product</h3>
+            <ul class="footer__list">
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#security">Security</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer__title">Company</h3>
+            <ul class="footer__list">
+              <li><a href="#testimonials">Testimonials</a></li>
+              <li><a href="#ai">AI Capabilities</a></li>
+              <li><a href="#top">About</a></li>
+              <li><a href="#top">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer__title">Follow</h3>
+            <div class="footer__socials">
+              <a class="footer__social-link" href="#top" aria-label="Twitter / X">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </a>
+              <a class="footer__social-link" href="#top" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
+                  <path d="M8 11V16M8 8H8.01M12 16V11M12 12.5C12 10.84 13.34 9.5 15 9.5C16.66 9.5 18 10.84 18 12.5V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </a>
+              <a class="footer__social-link" href="#top" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="17" cy="7" r="1" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>© 2026 MediVault. All rights reserved.</span>
+          <div class="footer__legal">
+            <a href="#top">Privacy Policy</a>
+            <a href="#top">Terms</a>
+            <a href="#security">DPDP Notice</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="modal" id="signup-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="signup-title">
+    <div class="modal__dialog" tabindex="-1">
+      <button class="modal__close" type="button" aria-label="Close sign up modal" data-modal-close>✕</button>
+      <div class="modal__progress" aria-hidden="true"><div class="modal__progress-bar" id="signup-progress"></div></div>
+      <div class="modal__header">
+        <div class="nav__brand">
+          <span class="nav__brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M24 5L38 11V23C38 31.8 31.8 39.9 24 43C16.2 39.9 10 31.8 10 23V11L24 5Z" stroke="#1A6BF5" stroke-width="2.6" stroke-linejoin="round"/>
+              <path d="M14 24H19L22 18L26 29L29 23H34" stroke="#0ABFB8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>MediVault</span>
+        </div>
+      </div>
+      <form id="signup-form" novalidate>
+        <section class="modal__step modal__step--active" data-signup-step="1">
+          <div class="modal__header">
+            <h2 class="modal__title" id="signup-title">Create your vault</h2>
+            <p class="modal__subtitle">Start with your phone number so we can securely verify you.</p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="signup-phone">Phone number</label>
+            <div class="input-wrap">
+              <span class="country-pill" aria-hidden="true">🇮🇳 +91</span>
+              <input class="input" id="signup-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="98765 43210" autocomplete="tel-national">
+            </div>
+            <span class="field__error" data-error-for="signup-phone" aria-live="polite"></span>
+          </div>
+          <button class="button button--primary" type="button" id="signup-send-otp">Send OTP</button>
+        </section>
+
+        <section class="modal__step" data-signup-step="2">
+          <div class="modal__header">
+            <h2 class="modal__title">Enter your verification code</h2>
+            <p class="modal__subtitle">Enter the 6-digit code sent to <span id="signup-phone-display">+91 XXXXX XXXXX</span>.</p>
+          </div>
+          <div class="otp">
+            <div class="otp__inputs" data-otp-group="signup">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+            </div>
+            <span class="field__error" data-error-for="signup-otp" aria-live="polite"></span>
+            <div class="otp__meta">
+              <span id="signup-resend">Resend in 0:45</span>
+              <button type="button" id="signup-resend-button" disabled>Resend OTP</button>
+            </div>
+          </div>
+          <button class="button button--primary" type="button" id="signup-verify-otp">Verify &amp; Continue</button>
+        </section>
+
+        <section class="modal__step" data-signup-step="3">
+          <div class="modal__header">
+            <h2 class="modal__title">Finish setting up your profile</h2>
+            <p class="modal__subtitle">A few details help us personalize your vault and improve appointment prep.</p>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field__label" for="signup-name">Full name</label>
+              <div class="input-wrap">
+                <input class="input" id="signup-name" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name">
+              </div>
+              <span class="field__error" data-error-for="signup-name" aria-live="polite"></span>
+            </div>
+            <div class="form-grid form-grid--two">
+              <div class="field">
+                <label class="field__label" for="signup-dob">Date of birth</label>
+                <div class="input-wrap">
+                  <input class="input" id="signup-dob" name="dob" type="date">
+                </div>
+                <span class="field__error" data-error-for="signup-dob" aria-live="polite"></span>
+              </div>
+              <div class="field">
+                <label class="field__label" for="signup-blood-group">Blood group</label>
+                <div class="input-wrap">
+                  <select class="select" id="signup-blood-group" name="bloodGroup">
+                    <option value="">Select</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+                <span class="field__error" data-error-for="signup-blood-group" aria-live="polite"></span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field__label">Gender</span>
+              <div class="segmented" role="radiogroup" aria-label="Gender">
+                <button class="segmented__option" type="button" data-gender="female">Female</button>
+                <button class="segmented__option" type="button" data-gender="male">Male</button>
+                <button class="segmented__option" type="button" data-gender="other">Other</button>
+              </div>
+              <input type="hidden" id="signup-gender" name="gender">
+              <span class="field__error" data-error-for="signup-gender" aria-live="polite"></span>
+            </div>
+          </div>
+          <button class="button button--primary" type="submit">Create My Vault</button>
+        </section>
+      </form>
+    </div>
+  </div>
+
+  <!-- Log In Modal -->
+  <div class="modal" id="login-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="login-title">
+    <div class="modal__dialog" tabindex="-1">
+      <button class="modal__close" type="button" aria-label="Close log in modal" data-modal-close>✕</button>
+      <div class="modal__header">
+        <div class="nav__brand">
+          <span class="nav__brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M24 5L38 11V23C38 31.8 31.8 39.9 24 43C16.2 39.9 10 31.8 10 23V11L24 5Z" stroke="#1A6BF5" stroke-width="2.6" stroke-linejoin="round"/>
+              <path d="M14 24H19L22 18L26 29L29 23H34" stroke="#0ABFB8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>MediVault</span>
+        </div>
+      </div>
+      <form id="login-form" novalidate>
+        <section class="login__step login__step--active" data-login-step="1">
+          <div class="modal__header">
+            <h2 class="modal__title" id="login-title">Log in to your vault</h2>
+            <p class="modal__subtitle">Use your verified phone number to access your records securely.</p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="login-phone">Phone number</label>
+            <div class="input-wrap">
+              <span class="country-pill" aria-hidden="true">🇮🇳 +91</span>
+              <input class="input" id="login-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="98765 43210" autocomplete="tel-national">
+            </div>
+            <span class="field__error" data-error-for="login-phone" aria-live="polite"></span>
+          </div>
+          <button class="button button--primary" type="button" id="login-send-otp">Send OTP</button>
+          <div class="biometric">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3C8.13 3 5 6.13 5 10V14C5 17.87 8.13 21 12 21C15.87 21 19 17.87 19 14V10C19 6.13 15.87 3 12 3Z" stroke="#1A6BF5" stroke-width="2"/>
+              <path d="M9 9C9 7.34 10.34 6 12 6C13.66 6 15 7.34 15 9" stroke="#0ABFB8" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>or use Face ID / Fingerprint</span>
+          </div>
+          <p class="modal__footer-link">New to MediVault? <button type="button" id="switch-to-signup">Create an account</button></p>
+        </section>
+
+        <section class="login__step" data-login-step="2">
+          <div class="modal__header">
+            <h2 class="modal__title">Enter your login code</h2>
+            <p class="modal__subtitle">Enter the 6-digit code sent to <span id="login-phone-display">+91 XXXXX XXXXX</span>.</p>
+          </div>
+          <div class="otp">
+            <div class="otp__inputs" data-otp-group="login">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+              <input class="otp__input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+            </div>
+            <span class="field__error" data-error-for="login-otp" aria-live="polite"></span>
+          </div>
+          <button class="button button--primary" type="submit">Log In</button>
+          <p class="modal__footer-link">Need a new account? <button type="button" id="login-switch-to-signup">Switch to sign up</button></p>
+        </section>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Returns a list of focusable elements inside a container.
+     * @param {HTMLElement} container - The element to inspect.
+     * @returns {HTMLElement[]} Focusable descendants.
+     */
+    const getFocusableElements = (container) => {
+      const selectors = [
+        'a[href]',
+        'button:not([disabled])',
+        'textarea:not([disabled])',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])'
+      ];
+      return Array.from(container.querySelectorAll(selectors.join(','))).filter((element) => !element.hasAttribute('hidden'));
+    };
+
+    /**
+     * Formats an Indian phone number preview for the OTP screen.
+     * @param {string} phone - Raw 10-digit phone number.
+     * @returns {string} Masked, formatted number.
+     */
+    const formatPhonePreview = (phone) => {
+      const digits = phone.replace(/\D/g, '').slice(0, 10);
+      if (digits.length !== 10) {
+        return '+91 XXXXX XXXXX';
+      }
+      return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
+    };
+
+    /**
+     * Scrolls to a matching anchor target using smooth browser behavior.
+     * @param {string} targetId - Section id to scroll to.
+     * @returns {void}
+     */
+    const smoothScrollTo = (targetId) => {
+      const target = document.getElementById(targetId);
+      if (!target) {
+        return;
+      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    /**
+     * Sets the active visual state for desktop and mobile navigation links.
+     * @param {string} targetId - Current visible section id.
+     * @returns {void}
+     */
+    const updateActiveNav = (targetId) => {
+      document.querySelectorAll('[data-nav-target]').forEach((link) => {
+        const isActive = link.getAttribute('data-nav-target') === targetId;
+        link.classList.toggle('nav__link--active', isActive && link.classList.contains('nav__link'));
+        link.classList.toggle('mobile-nav__link--active', isActive && link.classList.contains('mobile-nav__link'));
+      });
+    };
+
+    /**
+     * Starts a typewriter effect inside the hero AI bubble.
+     * @param {HTMLElement|null} element - Target text node container.
+     * @param {string} text - Final sentence to type out.
+     * @returns {void}
+     */
+    const startHeroTyping = (element, text) => {
+      if (!element) {
+        return;
+      }
+      let index = 0;
+      const render = () => {
+        element.innerHTML = `${text.slice(0, index)}<span class="hero__query-cursor" aria-hidden="true"></span>`;
+        index += 1;
+        if (index <= text.length) {
+          window.setTimeout(render, 42);
+        }
+      };
+      render();
+    };
+
+    /**
+     * Animates numeric stats from zero to their configured target.
+     * @param {HTMLElement} element - Number element holding the target data attributes.
+     * @returns {void}
+     */
+    const animateStat = (element) => {
+      if (element.dataset.animated === 'true') {
+        return;
+      }
+      element.dataset.animated = 'true';
+      const targetValue = Number.parseFloat(element.dataset.statTarget || '0');
+      const suffix = element.dataset.statSuffix || '';
+      const prefix = element.dataset.statPrefix || '';
+      const hasDecimal = `${targetValue}`.includes('.');
+      const duration = 1500;
+      const startTime = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = targetValue * eased;
+        const displayValue = hasDecimal ? current.toFixed(1) : Math.round(current).toLocaleString('en-IN');
+        element.textContent = `${prefix}${displayValue}${suffix}`;
+        if (progress < 1) {
+          window.requestAnimationFrame(tick);
+        }
+      };
+
+      window.requestAnimationFrame(tick);
+    };
+
+    /**
+     * Applies a visible class when animated elements enter the viewport.
+     * @returns {IntersectionObserver} Configured observer instance.
+     */
+    const createRevealObserver = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.18 });
+
+      document.querySelectorAll('[data-animate]').forEach((element) => {
+        const delay = element.getAttribute('data-delay');
+        if (delay) {
+          element.style.setProperty('--delay', `${delay}ms`);
+        }
+        observer.observe(element);
+      });
+      return observer;
+    };
+
+    /**
+     * Watches sections and updates nav active state based on viewport position.
+     * @returns {IntersectionObserver} Configured observer instance.
+     */
+    const createSectionObserver = () => {
+      const sections = ['home', 'features', 'how-it-works', 'security', 'pricing']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visible?.target?.id) {
+          updateActiveNav(visible.target.id);
+        }
+      }, { threshold: [0.25, 0.5, 0.75], rootMargin: '-20% 0px -40% 0px' });
+
+      sections.forEach((section) => observer.observe(section));
+      return observer;
+    };
+
+    /**
+     * Handles navbar scrolled styling after the page moves beyond a threshold.
+     * @returns {void}
+     */
+    const handleNavbarScroll = () => {
+      const navWrap = document.querySelector('.nav-wrap');
+      if (!navWrap) {
+        return;
+      }
+      navWrap.classList.toggle('nav-wrap--scrolled', window.scrollY > 60);
+    };
+
+    /**
+     * Updates the visual state of the How It Works stepper.
+     * @param {number} activeIndex - Index to activate.
+     * @returns {void}
+     */
+    const setActiveHowStep = (activeIndex) => {
+      document.querySelectorAll('.how__step').forEach((step, index) => {
+        const isActive = index === activeIndex;
+        step.classList.toggle('how__step--active', isActive);
+        step.setAttribute('aria-selected', `${isActive}`);
+      });
+    };
+
+    /**
+     * Validates a 10-digit Indian mobile number.
+     * @param {string} value - Raw input value.
+     * @returns {boolean} Whether the value is valid.
+     */
+    const isValidPhone = (value) => /^[6-9]\d{9}$/.test(value.replace(/\D/g, ''));
+
+    /**
+     * Writes an inline error message to the matching helper slot.
+     * @param {string} fieldId - Associated field identifier.
+     * @param {string} message - Error text to display.
+     * @returns {void}
+     */
+    const setFieldError = (fieldId, message) => {
+      const slot = document.querySelector(`[data-error-for="${fieldId}"]`);
+      if (slot) {
+        slot.textContent = message;
+      }
+    };
+
+    /**
+     * Clears an inline error message for a field.
+     * @param {string} fieldId - Associated field identifier.
+     * @returns {void}
+     */
+    const clearFieldError = (fieldId) => {
+      setFieldError(fieldId, '');
+    };
+
+    /**
+     * Returns the concatenated OTP value from a given OTP group.
+     * @param {string} groupName - Group name assigned in data-otp-group.
+     * @returns {string} Combined six-digit OTP string.
+     */
+    const getOtpValue = (groupName) => {
+      const group = document.querySelector(`[data-otp-group="${groupName}"]`);
+      if (!group) {
+        return '';
+      }
+      return Array.from(group.querySelectorAll('.otp__input')).map((input) => input.value).join('');
+    };
+
+    /**
+     * Sets up digit-only, auto-advance, backspace, and paste behavior for OTP inputs.
+     * @param {string} groupName - Group identifier to enhance.
+     * @returns {void}
+     */
+    const setupOtpGroup = (groupName) => {
+      const group = document.querySelector(`[data-otp-group="${groupName}"]`);
+      if (!group) {
+        return;
+      }
+      const inputs = Array.from(group.querySelectorAll('.otp__input'));
+
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+          input.value = input.value.replace(/\D/g, '').slice(0, 1);
+          if (input.value && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener('keydown', (event) => {
+          if (event.key === 'Backspace' && !input.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+
+      group.addEventListener('paste', (event) => {
+        const pasted = (event.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, inputs.length);
+        if (!pasted) {
+          return;
+        }
+        event.preventDefault();
+        inputs.forEach((input, index) => {
+          input.value = pasted[index] || '';
+        });
+        const focusTarget = inputs[Math.min(pasted.length, inputs.length) - 1];
+        focusTarget?.focus();
+      });
+    };
+
+    /**
+     * Creates a resend countdown timer and toggles the resend button at completion.
+     * @param {HTMLElement|null} label - Countdown label element.
+     * @param {HTMLButtonElement|null} button - Button to enable after countdown.
+     * @param {number} seconds - Starting seconds.
+     * @returns {number|null} Timer id for cleanup.
+     */
+    const startResendTimer = (label, button, seconds = 45) => {
+      if (!label || !button) {
+        return null;
+      }
+      button.disabled = true;
+      let remaining = seconds;
+      label.textContent = `Resend in 0:${String(remaining).padStart(2, '0')}`;
+      const timer = window.setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+          window.clearInterval(timer);
+          label.textContent = 'You can resend your OTP now';
+          button.disabled = false;
+          return;
+        }
+        label.textContent = `Resend in 0:${String(remaining).padStart(2, '0')}`;
+      }, 1000);
+      return timer;
+    };
+
+    /**
+     * Switches the active step in the sign-up wizard.
+     * @param {number} nextStep - Target step number.
+     * @returns {void}
+     */
+    const setSignupStep = (nextStep) => {
+      document.querySelectorAll('[data-signup-step]').forEach((step) => {
+        const isActive = Number(step.dataset.signupStep) === nextStep;
+        step.classList.toggle('modal__step--active', isActive);
+      });
+      const progress = document.getElementById('signup-progress');
+      if (progress) {
+        progress.style.width = `${(nextStep / 3) * 100}%`;
+      }
+    };
+
+    /**
+     * Switches the active step in the login flow.
+     * @param {number} nextStep - Target step number.
+     * @returns {void}
+     */
+    const setLoginStep = (nextStep) => {
+      document.querySelectorAll('[data-login-step]').forEach((step) => {
+        const isActive = Number(step.dataset.loginStep) === nextStep;
+        step.classList.toggle('login__step--active', isActive);
+      });
+    };
+
+    /**
+     * Opens a named modal, locks body scroll, and focuses the first control.
+     * @param {string} modalId - Modal element id to open.
+     * @returns {void}
+     */
+    const openModal = (modalId) => {
+      const modal = document.getElementById(`${modalId}-modal`);
+      if (!modal) {
+        return;
+      }
+      closeModal();
+      modal.classList.add('modal--open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('body--locked');
+      const focusable = getFocusableElements(modal);
+      focusable[0]?.focus();
+    };
+
+    /**
+     * Closes any open modal and restores page scroll.
+     * @returns {void}
+     */
+    const closeModal = () => {
+      document.querySelectorAll('.modal.modal--open').forEach((modal) => {
+        modal.classList.remove('modal--open');
+        modal.setAttribute('aria-hidden', 'true');
+      });
+      document.body.classList.remove('body--locked');
+    };
+
+    /**
+     * Traps keyboard focus within the currently open modal.
+     * @param {KeyboardEvent} event - Current keydown event.
+     * @returns {void}
+     */
+    const trapFocus = (event) => {
+      const modal = document.querySelector('.modal.modal--open');
+      if (!modal || event.key !== 'Tab') {
+        return;
+      }
+      const focusable = getFocusableElements(modal);
+      if (!focusable.length) {
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    /**
+     * Validates and advances sign-up step one.
+     * @returns {void}
+     */
+    const handleSignupPhoneStep = () => {
+      const input = document.getElementById('signup-phone');
+      const value = input?.value.replace(/\D/g, '') || '';
+      if (!isValidPhone(value)) {
+        setFieldError('signup-phone', 'Enter a valid 10-digit Indian mobile number.');
+        input?.focus();
+        return;
+      }
+      clearFieldError('signup-phone');
+      const display = document.getElementById('signup-phone-display');
+      if (display) {
+        display.textContent = formatPhonePreview(value);
+      }
+      if (signupTimer) {
+        window.clearInterval(signupTimer);
+      }
+      signupTimer = startResendTimer(
+        document.getElementById('signup-resend'),
+        /** @type {HTMLButtonElement|null} */ (document.getElementById('signup-resend-button'))
+      );
+      setSignupStep(2);
+      document.querySelector('[data-otp-group="signup"] .otp__input')?.focus();
+    };
+
+    /**
+     * Validates the sign-up OTP and advances to profile setup.
+     * @returns {void}
+     */
+    const handleSignupOtpStep = () => {
+      const otp = getOtpValue('signup');
+      if (otp.length !== 6) {
+        setFieldError('signup-otp', 'Enter the complete 6-digit code.');
+        return;
+      }
+      clearFieldError('signup-otp');
+      setSignupStep(3);
+      document.getElementById('signup-name')?.focus();
+    };
+
+    /**
+     * Validates final sign-up profile fields and shows success feedback.
+     * @param {SubmitEvent} event - Form submission event.
+     * @returns {void}
+     */
+    const handleSignupSubmit = (event) => {
+      event.preventDefault();
+      const name = /** @type {HTMLInputElement|null} */ (document.getElementById('signup-name'));
+      const dob = /** @type {HTMLInputElement|null} */ (document.getElementById('signup-dob'));
+      const bloodGroup = /** @type {HTMLSelectElement|null} */ (document.getElementById('signup-blood-group'));
+      const gender = /** @type {HTMLInputElement|null} */ (document.getElementById('signup-gender'));
+      let valid = true;
+
+      if (!name?.value.trim()) {
+        setFieldError('signup-name', 'Full name is required.');
+        valid = false;
+      } else {
+        clearFieldError('signup-name');
+      }
+
+      if (!dob?.value) {
+        setFieldError('signup-dob', 'Date of birth is required.');
+        valid = false;
+      } else {
+        clearFieldError('signup-dob');
+      }
+
+      if (!bloodGroup?.value) {
+        setFieldError('signup-blood-group', 'Select a blood group.');
+        valid = false;
+      } else {
+        clearFieldError('signup-blood-group');
+      }
+
+      if (!gender?.value) {
+        setFieldError('signup-gender', 'Select a gender option.');
+        valid = false;
+      } else {
+        clearFieldError('signup-gender');
+      }
+
+      if (!valid) {
+        return;
+      }
+
+      window.alert('Vault created successfully. This is a visual demo flow.');
+      closeModal();
+      event.currentTarget?.reset();
+      setSignupStep(1);
+    };
+
+    /**
+     * Validates login phone step and reveals OTP entry.
+     * @returns {void}
+     */
+    const handleLoginPhoneStep = () => {
+      const input = document.getElementById('login-phone');
+      const value = input?.value.replace(/\D/g, '') || '';
+      if (!isValidPhone(value)) {
+        setFieldError('login-phone', 'Enter a valid 10-digit Indian mobile number.');
+        input?.focus();
+        return;
+      }
+      clearFieldError('login-phone');
+      const display = document.getElementById('login-phone-display');
+      if (display) {
+        display.textContent = formatPhonePreview(value);
+      }
+      setLoginStep(2);
+      document.querySelector('[data-otp-group="login"] .otp__input')?.focus();
+    };
+
+    /**
+     * Validates login OTP and shows success feedback.
+     * @param {SubmitEvent} event - Form submission event.
+     * @returns {void}
+     */
+    const handleLoginSubmit = (event) => {
+      event.preventDefault();
+      const otp = getOtpValue('login');
+      if (otp.length !== 6) {
+        setFieldError('login-otp', 'Enter the complete 6-digit code.');
+        return;
+      }
+      clearFieldError('login-otp');
+      window.alert('Logged in successfully. This is a visual demo flow.');
+      closeModal();
+      event.currentTarget?.reset();
+      setLoginStep(1);
+    };
+
+    /**
+     * Updates displayed prices for monthly or annual billing with a quick transition.
+     * @param {'monthly'|'annual'} billing - Billing period to display.
+     * @returns {void}
+     */
+    const updatePricing = (billing) => {
+      document.querySelectorAll('.pricing__toggle-button').forEach((button) => {
+        const isActive = button.dataset.billing === billing;
+        button.classList.toggle('pricing__toggle-button--active', isActive);
+      });
+
+      document.querySelectorAll('.pricing-card__price').forEach((price) => {
+        price.classList.add('pricing-card__price--changing');
+        const nextValue = billing === 'annual' ? price.dataset.annual : price.dataset.monthly;
+        window.setTimeout(() => {
+          price.textContent = nextValue || price.textContent;
+          price.classList.remove('pricing-card__price--changing');
+        }, 180);
+      });
+    };
+
+    /**
+     * Initializes click handlers for all smooth-scroll links.
+     * @returns {void}
+     */
+    const setupSmoothScrollLinks = () => {
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const href = link.getAttribute('href');
+          if (!href || href === '#') {
+            return;
+          }
+          const targetId = href.slice(1);
+          const target = document.getElementById(targetId);
+          if (!target) {
+            return;
+          }
+          event.preventDefault();
+          smoothScrollTo(targetId);
+          mobileNav?.classList.remove('mobile-nav--open');
+          mobileNav?.setAttribute('aria-hidden', 'true');
+          navToggle?.setAttribute('aria-expanded', 'false');
+        });
+      });
+    };
+
+    /**
+     * Initializes modal triggers, dismissal controls, and keyboard listeners.
+     * @returns {void}
+     */
+    const setupModals = () => {
+      document.querySelectorAll('[data-modal-trigger]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const modalId = trigger.getAttribute('data-modal-trigger');
+          if (modalId) {
+            openModal(modalId);
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-modal-close]').forEach((button) => {
+        button.addEventListener('click', closeModal);
+      });
+
+      document.querySelectorAll('.modal').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            closeModal();
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+        trapFocus(event);
+      });
+    };
+
+    /**
+     * Initializes mobile navigation toggling and outside-click dismissal.
+     * @returns {void}
+     */
+    const setupMobileNav = () => {
+      if (!navToggle || !mobileNav) {
+        return;
+      }
+      navToggle.addEventListener('click', () => {
+        const isOpen = mobileNav.classList.toggle('mobile-nav--open');
+        mobileNav.setAttribute('aria-hidden', `${!isOpen}`);
+        navToggle.setAttribute('aria-expanded', `${isOpen}`);
+        navToggle.innerHTML = isOpen
+          ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+          : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!mobileNav.classList.contains('mobile-nav--open')) {
+          return;
+        }
+        const target = /** @type {Node} */ (event.target);
+        if (!mobileNav.contains(target) && !navToggle.contains(target)) {
+          mobileNav.classList.remove('mobile-nav--open');
+          mobileNav.setAttribute('aria-hidden', 'true');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    };
+
+    const navToggle = document.querySelector('.nav__toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    setupSmoothScrollLinks();
+    setupModals();
+    setupMobileNav();
+    setupOtpGroup('signup');
+    setupOtpGroup('login');
+    createRevealObserver();
+    createSectionObserver();
+    handleNavbarScroll();
+    startHeroTyping(document.getElementById('hero-typing-text'), 'What are my last 3 Hemoglobin readings?');
+
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+
+    document.querySelectorAll('.how__step').forEach((step) => {
+      step.addEventListener('click', () => {
+        setActiveHowStep(Number(step.dataset.step || '0'));
+      });
+    });
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.stats__number').forEach((element) => animateStat(element));
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    const statsBar = document.getElementById('stats-bar');
+    if (statsBar) {
+      statsObserver.observe(statsBar);
+    }
+
+    document.querySelectorAll('.pricing__toggle-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const billing = /** @type {'monthly'|'annual'} */ (button.dataset.billing || 'monthly');
+        updatePricing(billing);
+      });
+    });
+
+    document.getElementById('signup-send-otp')?.addEventListener('click', () => {
+      handleSignupPhoneStep();
+    });
+
+    document.getElementById('signup-verify-otp')?.addEventListener('click', () => {
+      handleSignupOtpStep();
+    });
+
+    document.getElementById('signup-form')?.addEventListener('submit', handleSignupSubmit);
+    document.getElementById('login-send-otp')?.addEventListener('click', handleLoginPhoneStep);
+    document.getElementById('login-form')?.addEventListener('submit', handleLoginSubmit);
+
+    document.getElementById('switch-to-signup')?.addEventListener('click', () => {
+      closeModal();
+      openModal('signup');
+    });
+
+    document.getElementById('login-switch-to-signup')?.addEventListener('click', () => {
+      closeModal();
+      openModal('signup');
+    });
+
+    document.querySelectorAll('.segmented__option').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.segmented__option').forEach((option) => option.classList.remove('segmented__option--active'));
+        button.classList.add('segmented__option--active');
+        const hiddenInput = document.getElementById('signup-gender');
+        if (hiddenInput) {
+          hiddenInput.value = button.getAttribute('data-gender') || '';
+        }
+        clearFieldError('signup-gender');
+      });
+    });
+
+    let signupTimer = null;
+
+    document.getElementById('signup-resend-button')?.addEventListener('click', () => {
+      if (signupTimer) {
+        window.clearInterval(signupTimer);
+      }
+      signupTimer = startResendTimer(
+        document.getElementById('signup-resend'),
+        /** @type {HTMLButtonElement|null} */ (document.getElementById('signup-resend-button'))
+      );
+    });
+  </script>
+</body>
+</html>
